@@ -20,6 +20,23 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-from __future__ import absolute_import, print_function
+from device import Device
 
-__all__ = ['devices', 'easy', 'fs']
+class WeightScale(Device):
+    def __init__(self, config = {}):
+        params = {
+            'period': 8070,
+            'device_type': 119,
+            'name': 'weightscale',
+        }
+        params.update(config)
+        Device.__init__(self, params)
+
+    def on_data(self, data):
+        if (data[0] == 1):
+            weight = 0.01 * (data[7] * 256 + data[6])
+            self.on_weight(weight)
+
+    def on_weight(self, weight):
+        pass
+
