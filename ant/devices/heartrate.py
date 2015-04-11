@@ -20,6 +20,19 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-from __future__ import absolute_import, print_function
+from device import Device
 
-__all__ = ['devices', 'easy', 'fs']
+class HeartRate(Device):
+    def __init__(self, config = {}):
+        params = {
+            'name': 'heartrate',
+            'device_type': 120,
+        }
+        params.update(config)
+        Device.__init__(self, params)
+
+    def on_data(self, data):
+        self.on_heartrate(data[7])
+
+    def on_heartrate(self, heartrate):
+        pass
