@@ -1,6 +1,7 @@
 *.pyc
 *.orig
 *.iml
+*.swp
 *~
 MANIFEST
 build/
