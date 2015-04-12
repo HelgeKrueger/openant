@@ -83,6 +83,14 @@ class Channel():
         self._ant.set_channel_rf_freq(self.id, rfFreq)
         return self.wait_for_response(Message.ID.SET_CHANNEL_RF_FREQ)
 
+    def add_exclude_list(self, excludeList):
+        for item in excludeList:
+            self._ant.add_channel_id(self.id, item['deviceNum'], item['deviceType'], item['transmissionType'], 0)
+            self.wait_for_response(Message.ID.ADD_CHANNEL_ID)
+
+        self._ant.config_list(self.id, len(excludeList), 1)
+        return self.wait_for_response(Message.ID.CONFIG_LIST)
+
     def set_search_waveform(self, waveform):
         self._ant.set_search_waveform(self.id, waveform)
         return self.wait_for_response(Message.ID.SET_SEARCH_WAVEFORM)

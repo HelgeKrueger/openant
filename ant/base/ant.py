@@ -257,6 +257,16 @@ class Ant():
         message = Message(Message.ID.SET_CHANNEL_RF_FREQ, [channel, rfFreq])
         self.write_message(message)
 
+    def add_channel_id(self, channel, deviceNum, deviceType, transmissionType, listId):
+        data = array.array('B', struct.pack("<BHBBB", channel, deviceNum, deviceType, transmissionType, listId))
+        message = Message(Message.ID.ADD_CHANNEL_ID, data)
+        self.write_message(message)
+
+    def config_list(self, channel, listSize, exclude):
+        data = array.array('B', struct.pack("<BBB", channel, listSize, exclude))
+        message = Message(Message.ID.CONFIG_LIST, data)
+        self.write_message(message)
+
     def set_network_key(self, network, key):
         message = Message(Message.ID.SET_NETWORK_KEY, [network] + key)
         self.write_message(message)
